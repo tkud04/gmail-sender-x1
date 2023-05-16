@@ -8,9 +8,9 @@ $void = "javascript:void(0)";
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Sender">
-    <title>@yield('title') | Sender</title>
+    <title><?php echo $__env->yieldContent('title'); ?> | Sender</title>
 
-    <link rel="canonical" href="{{url('/')}}">
+    <link rel="canonical" href="<?php echo e(url('/')); ?>">
 
    <!-- Styles -->
    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" /><!-- Bootstrap -->
@@ -59,14 +59,14 @@ $void = "javascript:void(0)";
 
 <div class="container-fluid">
   <div class="row">
-      @include('sidebar')
+      <?php echo $__env->make('sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
       <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
           <!--------- Input errors -------------->
-          @if (count($errors) > 0)
-                          @include('input-errors', ['errors'=>$errors])
-                     @endif 
+          <?php if(count($errors) > 0): ?>
+                          <?php echo $__env->make('input-errors', ['errors'=>$errors], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                     <?php endif; ?> 
 		  
-		  @yield('content')
+		  <?php echo $__env->yieldContent('content'); ?>
       </main>
   </div>
 </div>
@@ -76,8 +76,8 @@ $void = "javascript:void(0)";
 <script type="text/javascript" src="js/modernizr-2.0.6.js"></script><!-- Modernizr -->
 <script type="text/javascript" src="js/jquery-2.2.2.js"></script><!-- jQuery -->
 <script type="text/javascript" src="js/bootstrap.bundle.min.js"></script><!-- Bootstrap -->
-<script src="js/mmm.js?ver={{rand(12454494,2237347438)}}"></script>
-<script src="js/helpers.js?ver={{rand(12454494,2237347438)}}"></script>
+<script src="js/mmm.js?ver=<?php echo e(rand(12454494,2237347438)); ?>"></script>
+<script src="js/helpers.js?ver=<?php echo e(rand(12454494,2237347438)); ?>"></script>
 
 <!--SweetAlert JS--> 
 <script src="lib/sweet-alert/sweetalert2.js"></script>
@@ -85,7 +85,7 @@ $void = "javascript:void(0)";
 <!--Datatables JS--> 
 <script src="lib/datatables/datatables.min.js"></script>
 
-@yield('scripts')
+<?php echo $__env->yieldContent('scripts'); ?>
 
  <!--------- Session notifications-------------->
  <?php
@@ -104,22 +104,22 @@ $void = "javascript:void(0)";
               
              ?> 
 
-                 @if($pop != "" && $val != "")
-                   @include('session-status',['pop' => $pop, 'val' => $val])
-                 @endif
+                 <?php if($pop != "" && $val != ""): ?>
+                   <?php echo $__env->make('session-status',['pop' => $pop, 'val' => $val], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                 <?php endif; ?>
 
-@if($user == null)
+<?php if($user == null): ?>
 <!--------- Plugins: DO NOT EDIT ------>
 <?php
 foreach($plugins as $p)
 {
 ?>
-<!--{!! $p['value'] !!} -->
+<!--<?php echo $p['value']; ?> -->
 <?php
 }
 ?>
 <!------------------------------------->
-@endif
+<?php endif; ?>
 
 </body>
-</html>
+</html><?php /**PATH /Users/mac/repos/gmail-sender-x1/resources/views/layout.blade.php ENDPATH**/ ?>

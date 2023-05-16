@@ -34,34 +34,60 @@ const hideElem = (name) => {
 
 
 
-function bomb(dt){
+const bomb = async (dt) => {
 	    let em = leads[counter];
 
-		let payload = {
-			to: em,
-			from: `${dt.sname} <${dt.replyTo}>`,
-			subject: dt.subject,
-			msg: dt.msg
-		  };
-	
+		let fd = new FormData()
+		fd.append('xf',dt.xf)
+		fd.append('to',em)
+		fd.append('sn',dt.sname)
+		fd.append('se',dt.replyTo)
+		fd.append('subject',dt.subject)
+		fd.append('msg',dt.msg)
 
+		let req = new Request('api/bomb',{
+			method: 'POST',
+			body: fd
+		})
+
+		let rawResponse = await fetch(req)
+		if(rawResponse.status === 200){
+			let responseJSON = await rawResponse.json()
+			console.log({responseJSON})
+
+			setTimeout(function(){
+				++counter;
+				let ct = `
+				<tr>
+				  <td>${em}</td>
+				  <td>
+				   ${responseJSON?.status === 'ok' ? '<p class="text-primary">SENT</p>' : '<p class="text-danger">FAILED</p>'}
+				  </td>
+				</tr>`;
+				$('#result-body').append(ct);
+   
+				   if(counter < leads.length){
+					  bomb(dt);
+				   }
+				   else{	  
+					  //$('#result-box').hide();
+					  console.log("finished sending");
+					  alert('Done!')
+					  window.location.replace('/')
+				   }				  
+			   },4000);
+		}
+
+
+		
+	
+   /*
 	console.log(`Sending for ${em}`);	
 	
 	//fetch request
 	testBomb(payload);
 		   
-		    setTimeout(function(){
-	     	++counter;
-			 let ct = `<tr><td>${em}</td><td><p class="text-primary">SENT</p></td></tr>`;
-			 $('#result-body').append(ct);
-
-		        if(counter < leads.length){
-		           bomb(dt);
-	            }
-	            else{	  
-		           //$('#result-box').hide();
-		           console.log("finished sending");
-	            }				  
-            },4000);
+		   
+			*/
 }
 

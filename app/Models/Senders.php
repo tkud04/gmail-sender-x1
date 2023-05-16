@@ -21,7 +21,7 @@ class Senders extends Model
        'se' => "dunphydavid83@gmail.com"
      */
     protected $fillable = [
-        'user_id', 'current' , 'ss', 'sp', 'sec', 'sa', 'su', 'spp', 'sn', 'se', 'status'
+        'current' , 'ss', 'sp', 'sec', 'sa', 'su', 'spp', 'sn', 'se', 'status'
     ];
     
 }

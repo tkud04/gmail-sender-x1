@@ -17,6 +17,10 @@ use App\Models\Senders;
 use App\Models\Plugins;
 use App\Models\Settings;
 use GuzzleHttp\Client;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mime\Email;
 
 class Helper implements HelperContract
 {    
@@ -32,7 +36,7 @@ class Helper implements HelperContract
                        ];     
                         
              public $signals = ['okays'=> ["login-status" => "Sign in successful",            
-                     "signup-status" => "Account created successfully!",
+                     "add-sender-status" => "Sender added!",
                      "update-profile-status" => "Profile updated!",
                      "new-tracking-status" => "Tracking added!",
                      "tracking-status" => "Tracking updated!",
@@ -40,7 +44,7 @@ class Helper implements HelperContract
                      "contact-status" => "Message sent! Our customer service representatives will get back to you shortly.",
                      ],
                      'errors'=> ["login-status-error" => "There was a problem signing in, please contact support.",
-					 "signup-status-error" => "There was a problem signing in, please contact support.",
+					 "add-sender-status-error" => "There was a problem adding sender.",
 					 "update-status-error" => "There was a problem updating the account, please contact support.",
 					 "contact-status-error" => "There was a problem sending your message, please contact support.",
                      "tracking-status-error" => "Tracking info does not exist!",
@@ -99,6 +103,25 @@ $subject = $data['subject'];
                      });
                    }
            }    
+
+           function symfonySendMail($data){
+            
+              $email = (new Email())
+               ->from($data['from'])
+               ->to($data['to'])
+               //->cc('cc@example.com')
+               //->bcc('bcc@example.com')
+               //->replyTo('fabien@example.com')
+               //->priority(Email::PRIORITY_HIGH)
+               ->subject($data['subject'])
+               //->text('Sending emails is fun again!')
+               ->html($data['htmlContent']);
+               $dsn = "smtp://{$data['su']}:{$data['spp']}@{$data['ss']}:{$data['sp']}";
+              
+              $transport = Transport::fromDsn($dsn);
+              $mailer = new Mailer($transport);
+              $mailer->send($email);
+           }
 
            function createUser($data)
            {
@@ -398,280 +421,75 @@ $subject = $data['subject'];
                }
                
                return $u; 
-           }		   
-		   
-		   function getTNum()
-		   {
-			   return "DGS".rand(1999,9999999);
-		   }
-		   
-		     function addTracking($data)
-           {
-           	$tnum = isset($data['tnum']) ? $data['tnum'] : $this->getTNum();
-			 $ret = Trackings::where('tnum',$tnum)->first();
-			 //dd($data);
-			if($ret == null)
-			{
-				#'tnum', 'stype', 'weight', 'origin', 'bmode', 'freight', 'mode', 'dest', 'desc', 'status'
-				$ret = Trackings::create(['tnum' => $tnum,                                                                                                          
-                                                      'stype' => $data['stype'], 
-                                                      'weight' => $data['weight'], 
-                                                      'origin' => $data['origin'], 
-                                                      'bmode' => $data['bmode'], 
-                                                      'freight' => $data['freight'], 
-                                                      'mode' => $data['mode'], 
-                                                      'description' => $data['description'], 
-													  'dest' => $data['dest'],
-                                                      'pickup_at' => $data['pickup_at'], 
-                                                      'status' => $data['status'], 
-                                                      ]);
-			}
-			else
-			{
-           	   $ret->update([ 'dest' => $data['dest'], 
-                                                  'stype' => $data['stype'], 
-                                                      'weight' => $data['weight'], 
-                                                      'origin' => $data['origin'], 
-                                                      'bmode' => $data['bmode'], 
-                                                      'freight' => $data['freight'], 
-                                                      'mode' => $data['mode'], 
-                                                      'description' => $data['description'], 
-													  'pickup_at' => $data['pickup_at'],
-                                                      'status' => $data['status'], 
-                                                      ]);
-
-              $shipper = Shippers::where('tnum',$data['tnum'])->first();
-              $receiver = Receivers::where('tnum',$data['tnum'])->first();
-
-              if($shipper != null && $receiver != null)
-              {
-                  $shipper->update([
-                      'name' => $data['sname'],
-                      'phone' => $data['sphone'],
-                      'address' => $data['sadd']
-                  ]);
-
-                  $receiver->update([
-                    'name' => $data['rname'],
-                    'phone' => $data['rphone'],
-                    'address' => $data['radd']
-                ]);
-              }
-			}                                         
-                return $ret;
-           }
-           
-           function addTrackingHistory($data)
-           {
-           	
-				#''tnum', 'location', 'remarks', 'status'
-				$ret = TrackingHistory::create(['tnum' => $data['tnum'],                                                                                                          
-                                                      'location' => $data['location'], 
-                                                      'remarks' => $data['remarks'],                                                     
-                                                      'status' => $data['status'], 
-                                                      ]);
-			    
-                 $ret = Trackings::where('tnum',$data['tnum'])->first();
-				 $ret->update(['status' =>  $data['status']]);
-				
-                return $ret;
-				
-           }
-           
-           function addShipper($data)
-           {
-           	
-				#''tnum', 'location', 'remarks', 'status'
-				$ret = Shippers::create(['tnum' => $data['tnum'],                                                                                                          
-                                                      'name' => $data['name'], 
-                                                      'phone' => $data['phone'],                                                     
-                                                      'address' => $data['address'], 
-                                                      ]);
-			                                  
-                return $ret;
-           }
-           
-           function addReceiver($data)
-           {
-           	
-				#''tnum', 'location', 'remarks', 'status'
-				$ret = Receivers::create(['tnum' => $data['tnum'],                                                                                                          
-                                                      'name' => $data['name'], 
-                                                      'phone' => $data['phone'],                                                     
-                                                      'address' => $data['address'], 
-                                                      ]);
-			                                  
-                return $ret;
-           }
-		   
-		   function getTracking($tnum, $params = [])
-           {
-           	$ret = [];
-               $t = Trackings::where('tnum',$tnum)->first();
- 
-              if($t != null)
-               {
-               	#'tnum', 'stype', 'weight', 'origin', 'bmode', 'freight', 'mode', 'dest', 'desc', 'status'
-                   $temp['id'] = $t->id; 
-                   	     $temp['tnum'] = $t->tnum; 
-                   	     $temp['stype'] = $t->stype; 
-                            $temp['weight'] = $t->weight; 
-                            $temp['origin'] = $t->origin; 
-                            $temp['bmode'] = $t->bmode; 
-                            $temp['freight'] = $t->freight; 
-                            $temp['mode'] = $t->mode; 
-                            $temp['description'] = $t->description; 
-                            $temp['dest'] = $t->dest; 
-							if(isset($params['rawDate']) && $params['rawDate'])
-                            {
-                                $temp['pickup_at'] = $t->pickup_at;
-                            }
-                            else
-                            {
-                                $temp['pickup_at'] = Carbon::createFromFormat('d/m/Y',$t->pickup_at)->format("jS F, Y");
-                            }
-                            $temp['status'] = $t->status; 
-                         $temp['date'] = $t->created_at->format("jS F, Y"); 
-                         $temp['last_updated'] = $t->updated_at->format("jS F, Y");
-
-                         if(isset($params['mode']) && $params['mode'] == "all")
-                         {
-                             $temp['shipper'] = $this->getShipper($tnum);
-                             $temp['receiver'] = $this->getReceiver($tnum);
-                         }
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }	
-
-           function getTrackings($params = [])
-           {
-           	   $ret = [];
-				   $trackings =  Trackings::where('id','>','0')->latest()->get();
-				   
-				   if($trackings != null)
-				   {
-					  foreach($trackings as $t)
-					  {
-                   	     $temp = $this->getTracking($t->tnum, $params);
-                         array_push($ret,$temp); 
-					  }
-                    }                          
-                                                      
-                return $ret;
-           }
-
-
-  function getTrackingHistory($tnum)
-           {
-           	$ret = [];
- 
-              $trackings =  TrackingHistory::where('tnum',$tnum)->latest()->get();
-				   
-				   if($trackings != null)
-				   {
-					  foreach($trackings as $t)
-					  {
-                   	     $temp['id'] = $t->id; 
-                   	     $temp['tnum'] = $t->tnum; 
-                   	     $temp['location'] = $t->location; 
-                            $temp['remarks'] = $t->remarks;                             
-                   	     $temp['status'] = $t->status; 
-                         $temp['date'] = $t->created_at->format("jS F, Y h:i A"); 
-                         $temp['last_updated'] = $t->updated_at->format("jS F, Y h:i A");
-                         array_push($ret,$temp); 
-					  }
-                    }                   
-                                                      
-                return $ret;
-           }		   
-           
-           function getShipper($tnum)
-           {
-           	$ret = [];
-               $t = Shippers::where('tnum',$tnum)->first();
- 
-              if($t != null)
-               {
-               	$temp = [];
-                   $temp['id'] = $t->id; 
-                   	     $temp['tnum'] = $t->tnum; 
-                   	     $temp['name'] = $t->name; 
-                            $temp['address'] = $t->address; 
-                            $temp['phone'] = $t->phone;                            
-                         $temp['date'] = $t->created_at->format("jS F, Y"); 
-                         $temp['last_updated'] = $t->updated_at->format("jS F, Y");
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
            }	
            
-           function getReceiver($tnum)
-           {
-           	$ret = [];
-               $t = Receivers::where('tnum',$tnum)->first();
- 
-              if($t != null)
-               {
-               	$temp = [];
-                   $temp['id'] = $t->id; 
-                   	     $temp['tnum'] = $t->tnum; 
-                   	     $temp['name'] = $t->name; 
-                            $temp['address'] = $t->address; 
-                            $temp['phone'] = $t->phone;                            
-                         $temp['date'] = $t->created_at->format("jS F, Y"); 
-                         $temp['last_updated'] = $t->updated_at->format("jS F, Y");
-                       $ret = $temp; 
-               }                          
-                                                      
-                return $ret;
-           }
-
-           function track($tnum)
-		   {
-			   $ret = [];
-			  $ret['tracking'] = $this->getTracking($tnum);
-			 $ret['shipper'] = $this->getShipper($tnum);
-			 $ret['receiver'] = $this->getReceiver($tnum);
-			 $ret['history'] = $this->getTrackingHistory($tnum);
-             return $ret;
-		   }		
            
-           function getDashboardStats()
+           function createSender($data)
            {
-               $ret = []; $temp = [];
-               $ret['users'] = User::where('status','ok')->count();
-               $ret['trackings'] = Trackings::where('id','>','0')->count();
-               $ret['plugins'] = Plugins::where('status','active')->count();
-
-               $topTrackings = Trackings::where('id','>','0')->latest()->paginate(5);
-               foreach($topTrackings as $tt)
-               {
-                   $temp2 = $this->getTracking($tt->tnum,['mode' => "all"]);
-                   array_push($temp,$temp2);
-               }
-               $ret['topTrackings'] = $temp;
+            //dd($data);
+               $ret = Senders::create([
+                   'ss' => $data['ss'],
+                   'sp' => $data['sp'],
+                   'sa' => $data['sa'],
+                   'sec' => $data['sec'],
+                   'su' => $data['su'],
+                   'spp' => $data['spp'],
+                   'sn' => $data['sn'],
+                   'se' => $data['se'],
+                   'current' => $data['current'],
+                   'status' => $data['status']
+               ]);
 
                return $ret;
            }
 
-           function removeTracking($data)
+           function getSenders()
            {
-               $tnum = $data['tnum'];
-               $t = Trackings::where('tnum',$tnum)->first();
+               $ret = [];
+               $senders = Senders::where('id','>','0')->get();
 
-               if($t != null)
+               if($senders != null)
                {
-                   Shippers::where('tnum',$tnum)->delete();
-                   Receivers::where('tnum',$tnum)->delete();
-                   TrackingHistory::where('tnum',$tnum)->delete();
-
-                   $t->delete();
+                  foreach($senders as $s)
+                  {
+                      $temp = $this->getSender($s->id);
+                      array_push($ret,$temp);
+                  }
                }
+
+               return $ret;
            }
-           
-           
+
+           function getSender($id)
+           {
+               $ret = [];
+               $s = Senders::where('id',$id)->first();
+
+               if($s != null)
+               {
+                   $ret['id'] = $s->id;
+                   $ret['ss'] = $s->ss;
+                   $ret['sp'] = $s->sp;
+                   $ret['sa'] = $s->sa;
+                   $ret['sec'] = $s->sec;
+                   $ret['su'] = $s->su;
+                   $ret['spp'] = $s->spp;
+                   $ret['sn'] = $s->sn;
+                   $ret['se'] = $s->se;
+                   $ret['current'] = $s->current;
+                   $ret['status'] = $s->status;
+               }
+
+               return $ret;
+           }
+
+           function removeSender($id)
+           {
+               $s = Senders::where('id',$id)->first();
+
+               if($s != null) $s->delete();
+           }
+		   
+		          
 }
 ?>

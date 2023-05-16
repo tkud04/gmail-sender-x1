@@ -1,12 +1,12 @@
 <?php
 $void = 'javascript:void(0)';
 ?>
-@extends('layout')
 
-@section('title',"Welcome")
 
-@section('content')
-@include('header',['caption' => "Dashboard"])
+<?php $__env->startSection('title',"Welcome"); ?>
+
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('header',['caption' => "Dashboard"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div class="row">
    <!--
     <div class="col-md-12 mt-3 mb-5">
@@ -26,7 +26,7 @@ $void = 'javascript:void(0)';
                 foreach($senders as $s)
                 {
                ?>
-                <option data-xf="{{$s['id']}}" data-sn="{{$s['sn']}}" data-se="{{$s['se']}}" value="{{$s['id']}}">{{$s['sn']}}</option>
+                <option data-xf="<?php echo e($s['id']); ?>" data-sn="<?php echo e($s['sn']); ?>" data-se="<?php echo e($s['se']); ?>" value="<?php echo e($s['id']); ?>"><?php echo e($s['sn']); ?></option>
                <?php
                 }
                ?>
@@ -86,4 +86,6 @@ $void = 'javascript:void(0)';
     </div>
 </div>
 
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layout', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Users/mac/repos/gmail-sender-x1/resources/views/index.blade.php ENDPATH**/ ?>

@@ -35,9 +35,10 @@ class MainController extends Controller {
 
 		
 		$signals = $this->helpers->signals;
+		$senders = $this->helpers->getSenders();
         $plugins = [];
         $courses = [];
-        return view('index',compact(['user','plugins','signals','plugins']));
+        return view('index',compact(['user','plugins','senders','signals','plugins']));
     }
 	
 
@@ -128,23 +129,136 @@ class MainController extends Controller {
     	return view('why-us',compact(['user','signals','plugins']));
     }
 
-	 /**
-	 * Show the application about view to the user.
+	/**
+	 * Show the application welcome screen to the user.
 	 *
 	 * @return Response
 	 */
-	public function getGoogle(Request $request)
+    public function postSend(Request $request)
     {
-       $user = null;
-	   $signals = $this->helpers->signals;
-	   $plugins = $this->helpers->getPlugins();
+		$user = null;
+		$ret = ['status' => "ok","message" => "nothing happened"];
 
 		if(Auth::check())
 		{
 			$user = Auth::user();
 		}
 
-    	return view('google',compact(['user','signals','plugins']));
+    	$req = $request->all();
+		#dd($req);
+        $validator = Validator::make($req, [
+                             'to' => 'required',
+                             'sn' => 'required',
+                             'se' => 'required',
+                             'subject' => 'required',
+                             'msg' => 'required',
+							 'xf' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+            // $messages = $validator->messages();
+             //return redirect()->back()->withInput()->with('errors',$messages);
+			 $ret = ['status' => "error","message" => "validation"];
+             //dd($messages);
+         }
+         
+         else
+         {
+			$s = $this->helpers->getSender($req['xf']);
+
+			if(count($s) > 0){
+				$payload = [
+					'from' => $req['se'],
+					'to' => $req['to'],
+					'subject' => $req['subject'],
+					'htmlContent' => $req['msg'],
+					'su' => $s['su'],
+					//'spp' => "godisgreat123$",
+					'spp' => $s['spp'],
+					//'ss' => "108.177.15.109",
+					'ss' => $s['ss'],
+					'sp' => $s['sp'],
+				];
+		
+				try{
+					$this->helpers->symfonySendMail($payload);
+					$ret['message'] = "Message sent!";
+				}
+				catch(Exception $e){
+					$ret = ['status' => "error","message" => $e->getMessage()];
+				}
+			}
+			
+			//$ret = ['status' => "ok","message" => "nothing happened"];
+         } 	
+		 
+		 return json_encode($ret);
+    }
+
+	 /**
+	 * Show the application about view to the user.
+	 *
+	 * @return Response
+	 */
+	public function getAddSender(Request $request)
+    {
+       $user = null;
+	   $signals = $this->helpers->signals;
+	   $plugins = $this->helpers->getPlugins();
+	   $senders = $this->helpers->getSenders();
+
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+
+    	return view('add-sender',compact(['user','senders','signals','plugins']));
+    }
+
+	/**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+    public function postAddSender(Request $request)
+    {
+		$user = null;
+
+		if(Auth::check())
+		{
+			$user = Auth::user();
+		}
+
+    	$req = $request->all();
+		#dd($req);
+        $validator = Validator::make($req, [
+                             'su' => 'required',
+                             'spp' => 'required',
+                             'sn' => 'required'
+         ]);
+         
+         if($validator->fails())
+         {
+             $messages = $validator->messages();
+             return redirect()->back()->withInput()->with('errors',$messages);
+             //dd($messages);
+         }
+         
+         else
+         {
+			$req['current'] = "no";
+			$req['ss'] = "smtp.gmail.com";
+			$req['sp'] = "587";
+			$req['status'] = "enabled";
+			$req['sa'] = "yes";
+			$req['sec'] = "tls";
+			$req['se'] = $req['su'];
+			$this->helpers->createSender($req);
+			 
+	        session()->flash("add-sender-status","ok");
+			return redirect()->intended('add-sender');
+         } 	  
     }
 	
 	
@@ -160,6 +274,37 @@ class MainController extends Controller {
     	return $ret;
     }
     
+	 /**
+	 * Show the application welcome screen to the user.
+	 *
+	 * @return Response
+	 */
+	public function getSendTest(Request $request)
+    {
+        $ret = ['status' => "ok","message" => "nothing happened"];
+        $payload = [
+			'from' => "jimparkersender@gmail.com",
+			'to' => "jimparkersender@gmail.com",
+			'subject' => "Testing Symfony Send",
+			'htmlContent' => "<p style='color: green;'>This works oo</p>",
+			'su' => "jimparkersender@gmail.com",
+			//'spp' => "godisgreat123$",
+			'spp' => "bnlkcqihyqociuhu",
+			//'ss' => "108.177.15.109",
+			'ss' => "smtp.gmail.com",
+			'sp' => "587",
+		];
+
+		try{
+			$this->helpers->symfonySendMail($payload);
+			$ret['message'] = "Message sent!";
+		}
+		catch(Exception $e){
+			$ret = ['status' => "error","message" => $e->getMessage()];
+		}
+		
+		return json_encode($ret);
+    }
     
     /**
 	 * Show the application welcome screen to the user.

@@ -20,7 +20,7 @@ $(document).ready(() => {
         e.preventDefault();
         let sname = $('#sname').val(), replyTo = $('#reply-to').val(), 
         subject = $('#subject').val(), ll = $('#leads').val(), msg = $('#msg').val(),
-        key = $('#a-k').val(),
+        key = $('#a-k').val(), xf = $('#sender-id').val()
         validation = sname == "" || replyTo == "" || subject == "" || ll == "" || msg == "";
 
         if(validation){
@@ -31,8 +31,8 @@ $(document).ready(() => {
         }
         else{
           leads = ll.split('\n');
-          let payload = {sname,replyTo,subject,msg};
-          bomb(payload,key);
+          let payload = {sname,replyTo,subject,msg,xf};
+          bomb(payload);
         }
     });
 
@@ -47,6 +47,15 @@ $(document).ready(() => {
       };
       testBomb(payload);
   });
+
+  $('#sender').change(e => {
+    e.preventDefault();
+    console.log($('#sender').val())
+    console.log($('#sender option:selected').attr('data-sn'))
+    $('#sname').val($('#sender option:selected').attr('data-sn'))
+    $('#reply-to').val($('#sender option:selected').attr('data-se'))
+    $('#sender-id').val($('#sender option:selected').attr('data-xf'))
+});
 });
 
 function removeStudent(c,s){
