@@ -19,10 +19,11 @@ $(document).ready(() => {
   $('#send-btn').click(e => {
         e.preventDefault();
         let sname = $('#sname').val(), replyTo = $('#reply-to').val(), 
-        subject = $('#subject').val(), ll = $('#leads').val(), msg = $('#msg').val(),
+        subject = $('#subject').val(), ll = $('#leads').val(), msg = CKEDITOR.instances.editor.getData(),
         key = $('#a-k').val(), xf = $('#sender-id').val()
         validation = sname == "" || replyTo == "" || subject == "" || ll == "" || msg == "";
-
+  
+        
         if(validation){
           Swal.fire({
             icon: "info",
@@ -34,6 +35,7 @@ $(document).ready(() => {
           let payload = {sname,replyTo,subject,msg,xf};
           bomb(payload);
         }
+        
     });
 
 

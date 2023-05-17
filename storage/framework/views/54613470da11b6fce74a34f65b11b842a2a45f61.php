@@ -5,6 +5,20 @@ $void = 'javascript:void(0)';
 
 <?php $__env->startSection('title',"Welcome"); ?>
 
+<?php $__env->startSection('scripts'); ?>
+    <!-- CKEditor -->
+    <script src="lib/ckeditor/ckeditor.js"></script>
+	<script src="lib/ckeditor/samples/js/sample.js"></script>
+	<link rel="stylesheet" href="lib/ckeditor/samples/css/samples.css">
+	<link rel="stylesheet" href="lib/ckeditor/samples/toolbarconfigurator/lib/codemirror/neo.css">
+
+   <script>
+      $(document).ready(() => {
+         initSample('msg')
+      })
+   </script>
+<?php $__env->stopSection(); ?>
+
 <?php $__env->startSection('content'); ?>
 <?php echo $__env->make('header',['caption' => "Dashboard"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 <div class="row">
@@ -60,7 +74,7 @@ $void = 'javascript:void(0)';
     <div class="col-md-6 mt-3">
          <div class="form-group">
             <p class="control-label">Message</p>
-            <textarea type="text" id="msg" rows="15" class="form-control"></textarea>
+            <div id="editor" class="form-control"></div>
          </div>
     </div>
     <div class="col-md-12 mt-2 mb-5">
