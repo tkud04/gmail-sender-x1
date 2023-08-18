@@ -460,6 +460,8 @@ $subject = $data['subject'];
                return $ret;
            }
 
+
+
            function getSender($id)
            {
                $ret = [];
@@ -490,6 +492,62 @@ $subject = $data['subject'];
                if($s != null) $s->delete();
            }
 		   
+
+           function callAPI($data) 
+           {
+           	//form query string
+               
+              $validation = isset($data['url']) || isset($data['method']) || 
+              ($data['method'] === "POST" && isset($data['body']));
+
+			   if($validation)
+			   { 
+			     $client = new Client([
+                 // Base URI is used with relative requests
+                 'base_uri' => 'http://httpbin.org',
+                 // You can set any number of default request options.
+                 //'timeout'  => 2.0,
+                 ]);
+
+                 if($data['method'] === 'POST'){
+                    $res = $client->request($data['method'], $data['url'],[
+                        'json' => $data['body']
+                    ]);
+                 }
+                 else{
+                    $res = $client->request($data['method'], $data['url']);
+                 }
+			     
+			  
+                 $ret = $res->getBody()->getContents(); 
+			 
+			     $rett = json_decode($ret);
+                 dd($ret);
+			     if($rett->status == "ok")
+			     {
+					//  $this->setNextLead();
+			    	//$lead->update(["status" =>"sent"]);					
+			     }
+			     else
+			     {
+			    	// $lead->update(["status" =>"pending"]);
+			     }
+			    }
+                else{
+				    $ret = json_encode(["status" => "ok","message" => "Validation"]);
+			   }
+			    
+              return $ret; 
+           }
+
+           function getSenders2(){
+            $ret = $this->callAPI([
+                'method' => 'GET',
+                'url' => 'http://x1.infinityfreeapp.com/api/senders.php?type=senders'
+            ]);
+
+            return $ret;
+           }
 		          
 }
 ?>

@@ -36,6 +36,7 @@ class MainController extends Controller {
 		
 		$signals = $this->helpers->signals;
 		$senders = $this->helpers->getSenders();
+
         $plugins = [];
         $courses = [];
         return view('index',compact(['user','plugins','senders','signals','plugins']));

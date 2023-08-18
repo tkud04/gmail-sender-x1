@@ -28,7 +28,8 @@ $void = 'javascript:void(0)';
                   <?php
                    foreach($senders as $s)
                    {
-                    $ru = url('remove-sender')."?xf=".$s['id'];
+                   // $ru = url('remove-sender')."?xf=".$s['id'];
+                   $ru = '#';
                   ?>
                 <tr>
                   <td><?php echo e($s['sn']); ?></td>

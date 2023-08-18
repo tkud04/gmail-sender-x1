@@ -43,15 +43,15 @@ return [
             'foreign_key_constraints' => env('DB_FOREIGN_KEYS', true),
         ],
 
-        //mysql://b96816b1049bef:73ac9680@us-cdbr-east-06.cleardb.net/heroku_39dd9b24f867e83?reconnect=true
+        //mysql://w33yznyfjueddka3:zmmeudn88rbzb2iy@exbodcemtop76rnz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/dnuoto65iwtm636l
          'mysql' => [
             'driver' => 'mysql',
             //'url' => env('DATABASE_URL'),
-            'host' => env('DB_HOST', 'us-cdbr-east-06.cleardb.net'),
+            'host' => env('DB_HOST', 'exbodcemtop76rnz.cbetxkdyhwsb.us-east-1.rds.amazonaws.com'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'heroku_39dd9b24f867e83'),
-            'username' => env('DB_USERNAME', 'b96816b1049bef'),
-            'password' => env('DB_PASSWORD', '73ac9680'),
+            'database' => env('DB_DATABASE', 'dnuoto65iwtm636l'),
+            'username' => env('DB_USERNAME', 'w33yznyfjueddka3'),
+            'password' => env('DB_PASSWORD', 'zmmeudn88rbzb2iy'),
             'charset' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
             'unix_socket' => env('DB_SOCKET', ''),

@@ -31,6 +31,22 @@ const hideElem = (name) => {
 	
 }
 
+const getSenders = async () => {
+	const req = new Request('http://x1.infinityfreeapp.com/api/senders.php?type=senders',{
+		method: 'GET',
+	})
+
+	const rawResponse = await fetch(req)
+	console.log({rawResponse})
+
+	if(rawResponse.status === 200){
+		let responseJSON = await rawResponse.json()
+		console.log({responseJSON})
+
+		
+	}
+}
+
 
 
 
