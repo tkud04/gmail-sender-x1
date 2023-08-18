@@ -68,7 +68,6 @@ const bomb = async (dt) => {
 
 		let rawResponse = await fetch(req)
 		if(rawResponse.status === 200){
-			console.log({rawResponse})
 
 			let responseJSON = await rawResponse.json()
 			console.log({responseJSON})
