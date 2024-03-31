@@ -20,4 +20,5 @@ Route::get('/', [MainController::class,'getIndex']);
 Route::get('add-sender', [MainController::class,'getAddSender']);
 Route::post('add-sender', [MainController::class,'postAddSender']);
 Route::post('bomb', [MainController::class,'postSend']);
+Route::get('template', [MainController::class,'getTemplate']);
 

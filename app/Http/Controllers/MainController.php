@@ -324,7 +324,22 @@ class MainController extends Controller {
 		   'message' => $msg,
 		];
     	return $this->helpers->bomb($dt);
-    }   
+    }
+
+	public function getTemplate()
+	{
+		$user = null;
+		$signals = $this->helpers->signals;
+		$plugins = $this->helpers->getPlugins();
+		$senders = $this->helpers->getSenders();
+ 
+		 if(Auth::check())
+		 {
+			 $user = Auth::user();
+		 }
+		 
+		 return view('template',compact(['user','senders','signals','plugins'])); 
+	}
 
 
 }
