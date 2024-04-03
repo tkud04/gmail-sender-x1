@@ -43,124 +43,42 @@ $void = "javascript:void(0)";
                         </div>
                         <nav id="navigation" class="style_one">
                             <ul id="responsive">
-                                <li><a class="current" href="#">Home</a>
+                                <li>
+                                  <a class="current" href="#">Home</a>  
+                                </li>
+                                <li><a href="#">Students</a>
                                     <ul>
-                                        <li><a class="active" href="index_1.html">Home Version 1</a></li>
-                                        <li><a href="index_2.html">Home Version 2</a></li>
-                                        <li><a href="index_3.html">Home Version 3</a></li>
-                                        <li><a href="index_4.html">Home Version 4</a></li>
-                                        <li><a href="index_5.html">Home Version 5</a></li>
-                                        <li><a href="index_6.html">Home Version 6</a></li>
-                                        <li><a href="index_7.html">Home Version 7</a></li>
+                                       <li>Apply</li>
+                                       <li>View Applications</li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Listings</a>
+                                <li><a href="#">Schools</a>
                                     <ul>
-                                        <li><a href="#">List Layout</a>
-                                            <ul>
-                                                <li><a href="listings_list_with_sidebar.html">Listing List Sidebar</a>
-                                                </li>
-                                                <li><a href="listings_list_full_width.html">Listing List Full Width</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Grid Layout</a>
-                                            <ul>
-                                                <li><a href="listings_grid_with_sidebar.html">Listing Grid Sidebar</a>
-                                                </li>
-                                                <li><a href="listings_two_column_map_grid.html">Listing Two Column
-                                                        Grid</a></li>
-                                                <li><a href="listings_grid_full_width.html">Listing Grid Full Width</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Half Listing Map</a>
-                                            <ul>
-                                                <li><a href="listings_half_screen_map_list.html">Listing Half List</a>
-                                                </li>
-                                                <li><a href="listings_half_screen_map_grid.html">Listing Half Grid</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Listing Details</a>
-                                            <ul>
-                                                <li><a href="listings_single_page_1.html">Single Listing Version 1</a>
-                                                </li>
-                                                <li><a href="listings_single_page_2.html">Single Listing Version 2</a>
-                                                </li>
-                                                <li><a href="listings_single_page_3.html">Single Listing Version 3</a>
-                                                </li>
-                                                <li><a href="listings_single_page_4.html">Single Listing Version 4</a>
-                                                </li>
-                                                <li><a href="listings_single_page_5.html">Single Listing Version 5</a>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                       <li>Why List Your School</li>
+                                       <li>View Schools</li>
                                     </ul>
                                 </li>
-                                <li><a href="#">User Panel</a>
-                                    <ul>
-                                        <li><a href="dashboard.html">Dashboard</a></li>
-                                        <li><a href="dashboard_add_listing.html">Add Listing</a></li>
-                                        <li><a href="dashboard_my_listing.html">My Listings</a></li>
-                                        <li><a href="dashboard_bookings.html">Bookings</a></li>
-                                        <li><a href="dashboard_messages.html">Messages</a></li>
-                                        <li><a href="dashboard_wallet.html">Wallet</a></li>
-                                        <li><a href="dashboard_visitor_review.html">Reviews</a></li>
-                                        <li><a href="dashboard_bookmark.html">Bookmark</a></li>
-                                        <li><a href="dashboard_my_profile.html">My Profile</a></li>
-                                        <li><a href="dashboard_change_password.html">Change Password</a></li>
-                                        <li><a href="dashboard_invoice.html">Invoice</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Blog</a>
-                                    <ul>
-                                        <li><a href="blog_page.html">Blog Grid</a></li>
-                                        <li><a href="blog_page_left_sidebar.html">Blog Left Sidebar</a></li>
-                                        <li><a href="blog_page_right_sidebar.html">Blog Right Sidebar</a></li>
-                                        <li><a href="blog_detail_left_sidebar.html">Blog Detail Leftside</a></li>
-                                        <li><a href="blog_detail_right_sidebar.html">Blog Detail Rightside</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="#">Pages</a>
-                                    <ul>
-                                        <li><a href="page_about.html">About Us</a></li>
-                                        <li><a href="#">Categorie Type</a>
-                                            <ul>
-                                                <li><a href="page_categorie_one.html">Categorie One</a></li>
-                                                <li><a href="page_categorie_two.html">Categorie Two</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="add_listing.html">Add Listing</a></li>
-                                        <li><a href="listing_booking.html">Booking Listing</a></li>
-                                        <li><a href="page_pricing.html">Pricing Plan</a></li>
-                                        <li><a href="wishlist_listings.html">Wishlist Page</a></li>
-                                        <li><a href="page_filtering_style.html">Filtering Style</a></li>
-                                        <li><a href="typography.html">Typography</a></li>
-                                        <li><a href="page_element.html">Page Element</a></li>
-                                        <li><a href="page_faqs.html">Page Faq</a></li>
-                                        <li><a href="#">Icons</a>
-                                            <ul>
-                                                <li><a href="page_icons_one.html">Icon-Mind Icon</a></li>
-                                                <li><a href="page_icons_two.html">Simple Line Icon</a></li>
-                                                <li><a href="page_icons_three.html">Font Awesome Icon</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="page_not_found.html">Page Error 404</a></li>
-                                        <li><a href="page_coming_soon.html">Coming Soon</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                    </ul>
-                                </li>
+                                <li><a href="#">Help</a> </li>
+                                <li><a href="#">Contact Us</a> </li>
+                               
                             </ul>
                         </nav>
                         <div class="clearfix"></div>
                     </div>
-                    <div class="utf_right_side">
-                        <div class="header_widget"> <a href="#dialog_signin_part"
-                                class="button border sign-in popup-with-zoom-anim"><i class="fa fa-sign-in"></i> Sign
-                                In</a> <a href="dashboard_add_listing.html" class="button border with-icon"><i
-                                    class="sl sl-icon-user"></i> Add Listing</a></div>
-                    </div>
+                     <div class="utf_right_side">
+                       <div class="header_widget"> 
+                        <?php if(isset($user)): ?>
+                         
+                         <a href="#" class="button border with-icon">
+                          <i class="sl sl-icon-user"></i> Dashboard
+                         </a>
+                         <?php else: ?>
+                         <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim">
+                           <i class="fa fa-sign-in"></i> Sign In
+                         </a> 
+                         <?php endif; ?>
+                       </div>
+                     </div>
 
                     <div id="dialog_signin_part" class="zoom-anim-dialog mfp-hide">
                         <div class="small_dialog_header">
@@ -260,9 +178,7 @@ $void = "javascript:void(0)";
                 <div class="row">
                     <div class="col-md-4 col-sm-12 col-xs-12">
                         <h4>About Us</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                            labore Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                            incididunt ut labore</p>
+                        <p>AdmissionBOOX serves as a comprehensive, all-in-one solution for optimizing the admissions process and providing a superior user experience for all stakeholders involved.</p>
                     </div>
                     <div class="col-md-2 col-sm-3 col-xs-6">
                         <h4>Useful Links</h4>
@@ -328,6 +244,40 @@ $void = "javascript:void(0)";
     <script src="js/jquery_custom.js"></script>
     
     <?php echo $__env->yieldContent('scripts'); ?>
+
+    <!--------- Session notifications-------------->
+ <?php
+               $pop = ""; $val = "";
+               
+               if(isset($signals))
+               {
+                  foreach($signals['okays'] as $key => $value)
+                  {
+                    if(session()->has($key))
+                    {
+                  	$pop = $key; $val = session()->get($key);
+                    }
+                 }
+              }
+              
+             ?> 
+
+                 <?php if($pop != "" && $val != ""): ?>
+                   <?php echo $__env->make('session-status',['pop' => $pop, 'val' => $val], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                 <?php endif; ?>
+
+<?php if($user == null): ?>
+<!--------- Plugins: DO NOT EDIT ------>
+<?php
+foreach($plugins as $p)
+{
+?>
+<!--<?php echo $p['value']; ?> -->
+<?php
+}
+?>
+<!------------------------------------->
+<?php endif; ?>
 
 </body>
 </html><?php /**PATH /Users/mac/repos/admissionboox/resources/views/layout.blade.php ENDPATH**/ ?>

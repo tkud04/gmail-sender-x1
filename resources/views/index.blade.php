@@ -9,7 +9,7 @@ $void = 'javascript:void(0)';
 <script src="js/typed.js"></script>
     <script>
         var typed = new Typed('.typed-words', {
-            strings: ["Attractions", " Restaurants", " Hotels"],
+            strings: {!! json_encode($typedTexts) !!},
             typeSpeed: 80,
             backSpeed: 80,
             backDelay: 4000,
@@ -21,5 +21,5 @@ $void = 'javascript:void(0)';
 @stop
 
 @section('content')
-<h2>Been Long You Saw Me</h2>
+@include('home-search')
 @stop

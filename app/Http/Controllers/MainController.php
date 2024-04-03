@@ -13,10 +13,12 @@ use Carbon\Carbon;
 class MainController extends Controller {
 
 	protected $helpers; //Helpers implementation
+	protected $compactValues;
     
     public function __construct(HelperContract $h)
     {
-    	$this->helpers = $h;                     
+    	$this->helpers = $h;        
+		$this->compactValues = ['user','plugins','senders','signals'];         
     }
 
 	/**
@@ -33,13 +35,16 @@ class MainController extends Controller {
 			$user = Auth::user();
 		}
 
-		
 		$signals = $this->helpers->signals;
 		$senders = $this->helpers->getSenders();
+		$plugins = $this->helpers->getPlugins();
+		$c = $this->compactValues;
+		
+		$typedTexts = ['Primary','Secondary'];
+		array_push($c,'typedTexts');
+        
 
-        $plugins = [];
-        $courses = [];
-        return view('index',compact(['user','plugins','senders','signals','plugins']));
+        return view('index',compact($c));
     }
 	
 
