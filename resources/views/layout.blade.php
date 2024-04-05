@@ -17,7 +17,7 @@ $void = "javascript:void(0)";
     <!-- Style CSS -->
     <link rel="stylesheet" href="css/stylesheet.css">
     <link rel="stylesheet" href="css/mmenu.css">
-    <link rel="stylesheet" href="css/style.css" id="colors">
+    <link rel="stylesheet" href="css/stylesheet_1.css" id="colors">
     <!-- Google Font -->
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700,800&display=swap&subset=latin-ext,vietnamese"
@@ -69,13 +69,21 @@ $void = "javascript:void(0)";
                        <div class="header_widget"> 
                         @if(isset($user))
                          
-                         <a href="#" class="button border with-icon">
-                          <i class="sl sl-icon-user"></i> Dashboard
-                         </a>
+                         @include('components.button',
+                         [
+                            'href' => "#",
+                            'classes' => "with-icon",
+                            'icon' => "<i class='sl sl-icon-user'></i>",
+                            'title' => "Dashboard"
+                         ])
                          @else
-                         <a href="#dialog_signin_part" class="button border sign-in popup-with-zoom-anim">
-                           <i class="fa fa-sign-in"></i> Sign In
-                         </a> 
+                         @include('components.button',
+                         [
+                            'href' => "#dialog_signin_part",
+                            'classes' => "sign-in popup-with-zoom-anim",
+                            'icon' => "<i class='fa fa-sign-in'></i>",
+                            'title' => "Sign In"
+                         ])
                          @endif
                        </div>
                      </div>
@@ -240,7 +248,6 @@ $void = "javascript:void(0)";
     <script src="js/bootstrap-select.min.js"></script>
     <script src="js/mmenu.js"></script>
     <script src="js/tooltips.min.js"></script>
-    <script src="js/color_switcher.js"></script>
     <script src="js/jquery_custom.js"></script>
     
     @yield('scripts')

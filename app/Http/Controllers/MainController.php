@@ -42,6 +42,40 @@ class MainController extends Controller {
 		
 		$typedTexts = ['Primary','Secondary'];
 		array_push($c,'typedTexts');
+
+		$categories = [
+			[
+				'name' => 'Boarding Schools',
+				'image' => 'images/popular-location-01.jpg',
+				'numListings' => 18
+			],
+			[
+				'name' => 'Day Schools',
+				'image' => 'images/popular-location-02.jpg',
+				'numListings' => 26
+			],
+			[
+				'name' => 'Mixed Schools',
+				'image' => 'images/popular-location-03.jpg',
+				'numListings' => 19
+			],
+			[
+				'name' => 'Girls Schools',
+				'image' => 'images/popular-location-04.jpg',
+				'numListings' => 22
+			],
+			[
+				'name' => 'Boys Schools',
+				'image' => 'images/popular-location-05.jpg',
+				'numListings' => 19
+			],
+			[
+				'name' => 'Private Schools',
+				'image' => 'images/popular-location-06.jpg',
+				'numListings' => 33
+			]
+		];
+		array_push($c,'categories');
         
 
         return view('index',compact($c));

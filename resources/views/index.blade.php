@@ -21,5 +21,6 @@ $void = 'javascript:void(0)';
 @stop
 
 @section('content')
-@include('home-search')
+  @include('home-search')
+  @include('listing-categories',['categories' => $categories])
 @stop
