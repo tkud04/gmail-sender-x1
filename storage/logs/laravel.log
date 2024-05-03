@@ -5455,3 +5455,11 @@
 #58 /Users/mac/repos/admissionboox/vendor/laravel/framework/src/Illuminate/Foundation/resources/server.php(16): require_once('/Users/mac/repo...')
 #59 {main}
 "} 
+[2024-05-03 19:14:26] local.ERROR: Class App\Helpers\Helper contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (App\Helpers\Contracts\HelperContract::sendEmailSMTP, App\Helpers\Contracts\HelperContract::bomb) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Class App\\Helpers\\Helper contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (App\\Helpers\\Contracts\\HelperContract::sendEmailSMTP, App\\Helpers\\Contracts\\HelperContract::bomb) at /Users/mac/repos/admissionboox/app/Helpers/Helper.php:21)
+[stacktrace]
+#0 {main}
+"} 
+[2024-05-03 19:15:14] local.ERROR: Declaration of App\Helpers\Helper::symfonySendMail($data) must be compatible with App\Helpers\Contracts\HelperContract::symfonySendMail($data, $view, $type) {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Declaration of App\\Helpers\\Helper::symfonySendMail($data) must be compatible with App\\Helpers\\Contracts\\HelperContract::symfonySendMail($data, $view, $type) at /Users/mac/repos/admissionboox/app/Helpers/Helper.php:51)
+[stacktrace]
+#0 {main}
+"} 

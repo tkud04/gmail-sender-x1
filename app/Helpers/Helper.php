@@ -9,10 +9,6 @@ use Auth;
 use \Swift_Mailer;
 use \Swift_SmtpTransport;
 use App\Models\User;
-use App\Models\Trackings;
-use App\Models\TrackingHistory;
-use App\Models\Shippers;
-use App\Models\Receivers;
 use App\Models\Senders;
 use App\Models\Plugins;
 use App\Models\Settings;
@@ -50,59 +46,7 @@ class Helper implements HelperContract
                      "tracking-status-error" => "Tracking info does not exist!",
                     ]
                    ];
-
-
-          function sendEmailSMTP($data,$view,$type="view")
-           {
-           	    // Setup a new SmtpTransport instance for new SMTP
-                $transport = "";
-if($data['sec'] != "none") $transport = new Swift_SmtpTransport($data['ss'], $data['sp'], $data['sec']);
-
-else $transport = new Swift_SmtpTransport($data['ss'], $data['sp']);
-
-   if($data['sa'] != "no"){
-                  $transport->setUsername($data['su']);
-                  $transport->setPassword($data['spp']);
-     }
-// Assign a new SmtpTransport to SwiftMailer
-$smtp = new Swift_Mailer($transport);
-
-// Assign it to the Laravel Mailer
-Mail::setSwiftMailer($smtp);
-
-$se = $data['se'];
-$sn = $data['sn'];
-$to = $data['em'];
-$subject = $data['subject'];
-                   if($type == "view")
-                   {
-                     Mail::send($view,$data,function($message) use($to,$subject,$se,$sn){
-                           $message->from($se,$sn);
-                           $message->to($to);
-                           $message->subject($subject);
-                          if(isset($data["has_attachments"]) && $data["has_attachments"] == "yes")
-                          {
-                          	foreach($data["attachments"] as $a) $message->attach($a);
-                          } 
-						  $message->getSwiftMessage()
-						  ->getHeaders()
-						  ->addTextHeader('x-mailgun-native-send', 'true');
-                     });
-                   }
-
-                   elseif($type == "raw")
-                   {
-                     Mail::raw($view,$data,function($message) use($to,$subject,$se,$sn){
-                            $message->from($se,$sn);
-                           $message->to($to);
-                           $message->subject($subject);
-                           if(isset($data["has_attachments"]) && $data["has_attachments"] == "yes")
-                          {
-                          	foreach($data["attachments"] as $a) $message->attach($a);
-                          } 
-                     });
-                   }
-           }    
+ 
 
            function symfonySendMail($data){
             
@@ -123,21 +67,7 @@ $subject = $data['subject'];
               $mailer->send($email);
            }
 
-           function createUser($data)
-           {
-           	$ret = User::create(['fname' => $data['fname'], 
-                                                      'lname' => $data['lname'], 
-                                                      'email' => $data['email'], 
-                                                     'role' => $data['role'], 
-                                                      'status' => $data['status'], 
-                                                     'verified' => $data['verified'], 
-                                                      'password' => bcrypt($data['password']), 
-                                                      'remember_token' => "default",
-                                                      'reset_code' => "default"
-                                                      ]);
-                                                      
-                return $ret;
-           }
+          
 
            
            function addSettings($data)
@@ -165,6 +95,24 @@ $subject = $data['subject'];
           }
           
  
+          function createUser($data)
+          {
+           
+              $ret = User::create(['fname' => $data['fname'], 
+                                                     'lname' => $data['lname'], 
+                                                     'email' => $data['email'], 
+                                                     'phone' => $data['phone'], 
+                                                     'role' => $data['role'], 
+                                                     'gender' => $data['gender'], 
+                                                     'status' => $data['status'], 
+                                                    'verified' => $data['verified'], 
+                                                     'password' => bcrypt($data['password']), 
+                                                     'remember_token' => "default",
+                                                     'reset_code' => "default"
+                                                     ]);
+                                                     
+               return $ret;
+          }
            
            function getUser($email)
            {
@@ -176,10 +124,11 @@ $subject = $data['subject'];
                {
                    	$temp['fname'] = $u->fname; 
                        $temp['lname'] = $u->lname; 
-                       $temp['class'] = $u->class;
+                       $temp['phone'] = $u->phone;
                        $temp['email'] = $u->email; 
                        $temp['role'] = $u->role; 
                        $temp['status'] = $u->status; 
+                       $temp['verified'] = $u->verified; 
                        $temp['id'] = $u->id; 
                        $temp['date'] = $u->created_at->format("jS F, Y");  
                        $ret = $temp; 
@@ -213,18 +162,24 @@ $subject = $data['subject'];
               if(isset($data['email']))
                {
                	$u = User::where('email', $data['email'])->first();
-                   
+ 
                         if($u != null)
                         {
 							$role = $u->role;
+							$payload = [];
+                            if(isset($data['fname'])) $payload['fname'] = $data['fname'];
+                            if(isset($data['lname'])) $payload['lname'] = $data['lname'];
+                            if(isset($data['email'])) $payload['email'] = $data['email'];
+                            if(isset($data['phone'])) $payload['phone'] = $data['phone'];
+                            if(isset($data['password'])) $payload['password'] = $data['password'];
+                            if(isset($data['gender'])) $payload['gender'] = $data['gender'];
+                            if(isset($data['role'])) $payload['role'] = $data['role'];
+                            if(isset($data['status'])) $payload['status'] = $data['status'];
+                            if(isset($data['verified'])) $payload['verified'] = $data['verified'];
+                            if(isset($data['remember_token'])) $payload['remember_token'] = $data['remember_token'];
+                            if(isset($data['reset_code'])) $payload['reset_code'] = $data['reset_code'];
 							
-							
-                        	$u->update(['fname' => $data['fname'],
-                                              'lname' => $data['lname'],
-                                              'email' => $data['email']
-                                           ]);
-							
-                             
+                        	$u->update($payload);
                              $ret = "ok";
                         }                                    
                }                                 
@@ -306,53 +261,7 @@ $subject = $data['subject'];
 		   
 
 		   
-		   function bomb($data) 
-           {
-           	//form query string
-               $qs = "sn=".$data['sn']."&sa=".$data['sa']."&subject=".$data['subject'];
-
-               $lead = $data['em'];
-			   
-			   if($lead == null)
-			   {
-				    $ret = json_encode(["status" => "ok","message" => "Invalid recipient email"]);
-			   }
-			   else
-			    { 
-                  $qs .= "&receivers=".$lead."&ug=deal"; 
-               
-                  $config = $this->emailConfig;
-                  $qs .= "&host=".$config['ss']."&port=".$config['sp']."&user=".$config['su']."&pass=".$config['spp'];
-                  $qs .= "&message=".$data['message'];
-               
-			      //Send request to nodemailer
-			      $url = "https://radiant-island-62350.herokuapp.com/?".$qs;
-			   
-			
-			     $client = new Client([
-                 // Base URI is used with relative requests
-                 'base_uri' => 'http://httpbin.org',
-                 // You can set any number of default request options.
-                 //'timeout'  => 2.0,
-                 ]);
-			     $res = $client->request('GET', $url);
-			  
-                 $ret = $res->getBody()->getContents(); 
-			 
-			     $rett = json_decode($ret);
-			     if($rett->status == "ok")
-			     {
-					//  $this->setNextLead();
-			    	//$lead->update(["status" =>"sent"]);					
-			     }
-			     else
-			     {
-			    	// $lead->update(["status" =>"pending"]);
-			     }
-			    }
-              return $ret; 
-           }
-		   
+		
 		   function getPosts()
            {
 			   $d = date("jS F, Y h:i A");

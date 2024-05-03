@@ -60,6 +60,7 @@ class LoginController extends Controller {
     public function postSignin(Request $request)
     {
         $req = $request->all();
+        $ret = ['status' => 'error','message' => "nothing happened"];
         #dd($req);
         
         $validator = Validator::make($req, [
@@ -70,9 +71,7 @@ class LoginController extends Controller {
          if($validator->fails())
          {
              $messages = $validator->messages();
-             //return redirect()->back()->withInput()->with('errors',$messages);
-             session()->flash("login-status","error");
-				return redirect()->intended('/');
+             $ret['message'] = "validation";
          }
          
          else
@@ -88,15 +87,15 @@ class LoginController extends Controller {
                $user = Auth::user();          
                # dd($user); 
 				              
-                  return redirect()->intended($return);
+                 $ret = ['status'=> "ok"];
             }
 			
 			else
 			{
-				session()->flash("login-status","error");
-				return redirect()->intended('/');
+				$ret['message'] = "auth";
 			}
-         }        
+         }
+         return json_encode($ret);        
     }
 
 

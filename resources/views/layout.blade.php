@@ -103,18 +103,18 @@ $void = "javascript:void(0)";
                                     <form method="post" class="login">
                                         <p class="utf_row_form utf_form_wide_block">
                                             <label for="username">
-                                                <input type="text" class="input-text" name="username" id="username"
-                                                    value="" placeholder="Username" />
+                                                <input type="text" class="input-text" id="#signup-email"
+                                                    value="" placeholder="Email address" />
                                             </label>
                                         </p>
                                         <p class="utf_row_form utf_form_wide_block">
                                             <label for="password">
-                                                <input class="input-text" type="password" name="password" id="password"
+                                                <input class="input-text" type="password"  id="signup-password"
                                                     placeholder="Password" />
                                             </label>
                                         </p>
                                         <div class="utf_row_form utf_form_wide_block form_forgot_part"> <span
-                                                class="lost_password fl_left"> <a href="javascript:void(0);">Forgot
+                                                class="lost_password fl_left"> <a href="{{url('forgot-password')}}">Forgot
                                                     Password?</a> </span>
                                             <div class="checkboxes fl_right">
                                                 <input id="remember-me" type="checkbox" name="check">
@@ -122,8 +122,11 @@ $void = "javascript:void(0)";
                                             </div>
                                         </div>
                                         <div class="utf_row_form">
-                                            <input type="submit" class="button border margin-top-5" name="login"
-                                                value="Login" />
+                                            @include('components.generic-loading',['message' => 'Signing you in'])
+                                           
+                                        </div>
+                                        <div class="utf_row_form">
+                                            <a href="#" id="login-btn" class="button border margin-top-5 text-center">Login</a>
                                         </div>
                                         <div class="utf-login_with my-3">
                                             <span class="txt">Or Login in With</span>
@@ -220,8 +223,8 @@ $void = "javascript:void(0)";
                     <div class="col-md-2 col-sm-3 col-xs-6">
                         <h4>Help</h4>
                         <ul class="social_footer_link">
-                            <li><a href="#">Sign In</a></li>
-                            <li><a href="#">Register</a></li>
+                            <li><a href="#dialog_signin_part">Sign In</a></li>
+                            <li><a href="#dialog_signin_part">Register</a></li>
                             <li><a href="#">Add Listing</a></li>
                             <li><a href="#">Pricing</a></li>
                             <li><a href="#">Contact Us</a></li>

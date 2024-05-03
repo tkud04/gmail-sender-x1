@@ -3,8 +3,8 @@ namespace App\Helpers\Contracts;
 
 Interface HelperContract
 {
-        public function sendEmailSMTP($data,$view,$type);
+        public function symfonySendMail($data);
         public function createUser($data);
-        public function bomb($data);	
+        public function callAPI($data);	
 }
  ?>
