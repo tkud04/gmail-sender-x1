@@ -15,7 +15,7 @@ $void = "javascript:void(0)";
     <!-- Favicon -->
     <link rel="shortcut icon" href="images/favicon.png">
     <!-- Style CSS -->
-    <link rel="stylesheet" href="css/stylesheet.css">
+    <!--<link rel="stylesheet" href="css/stylesheet.css">-->
     <link rel="stylesheet" href="css/mmenu.css">
     <link rel="stylesheet" href="css/stylesheet_1.css" id="colors">
     <!-- Google Font -->
@@ -33,7 +33,7 @@ $void = "javascript:void(0)";
             <div id="header">
                 <div class="container">
                     <div class="utf_left_side">
-                        <div id="logo"> <a href="index_1.html"><img src="images/logo.png" alt=""></a> </div>
+                        <div id="logo"> <a href="<?php echo e(url('/')); ?>"><img src="images/logo.png" alt=""></a> </div>
                         <div class="mmenu-trigger">
                             <button class="hamburger utfbutton_collapse" type="button">
                                 <span class="utf_inner_button_box">
@@ -44,22 +44,22 @@ $void = "javascript:void(0)";
                         <nav id="navigation" class="style_one">
                             <ul id="responsive">
                                 <li>
-                                  <a class="current" href="#">Home</a>  
+                                  <a class="current" href="<?php echo e(url('/')); ?>">Home</a>  
                                 </li>
-                                <li><a href="#">Students</a>
+                                <li>
+                                   <a href="<?php echo e(url('schools')); ?>">Schools</a>
+                                </li>
+                                <li><a href="#">About</a>
                                     <ul>
-                                       <li>Apply</li>
-                                       <li>View Applications</li>
+                                       <li><a href="<?php echo e(url('about')); ?>">About Us</a></li>
+                                       <li><a href="<?php echo e(url('vision-mission')); ?>">Vision/Mission</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Schools</a>
-                                    <ul>
-                                       <li>Why List Your School</li>
-                                       <li>View Schools</li>
-                                    </ul>
+                                <li>
+                                   <a href="<?php echo e(url('scholarships')); ?>">Scholarships</a>
                                 </li>
-                                <li><a href="#">Help</a> </li>
-                                <li><a href="#">Contact Us</a> </li>
+                                <li><a href="<?php echo e(url('help')); ?>">Help</a> </li>
+                                <li><a href="<?php echo e(url('contact')); ?>">Contact Us</a> </li>
                                
                             </ul>
                         </nav>
@@ -84,6 +84,7 @@ $void = "javascript:void(0)";
                             'icon' => "<i class='fa fa-sign-in'></i>",
                             'title' => "Sign In"
                          ], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                         
                          <?php endif; ?>
                        </div>
                      </div>

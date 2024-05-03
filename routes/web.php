@@ -16,9 +16,19 @@ use App\Http\Controllers\AdminController;
 |
 */
 
+//AdmissionBoox routes
 Route::get('/', [MainController::class,'getIndex']);
-Route::get('add-sender', [MainController::class,'getAddSender']);
-Route::post('add-sender', [MainController::class,'postAddSender']);
-Route::post('bomb', [MainController::class,'postSend']);
-Route::get('template', [MainController::class,'getTemplate']);
 
+
+//Auth routes
+Route::post('signin', [LoginController::class,'postSignin']);
+Route::post('signup', [LoginController::class,'postSignup']);
+Route::get('forgot-password', [LoginController::class,'getForgotPassword']);
+Route::post('forgot-password', [LoginController::class,'postForgotPassword']);
+Route::get('reset-password', [LoginController::class,'getResetPassword']);
+Route::post('reset-password', [LoginController::class,'postResetPassword']);
+Route::get('bye', [LoginController::class,'getLogout']);
+
+//Admin routes
+Route::get('add-sender', [AdminController::class,'getAddSender']);
+Route::post('add-sender', [AdminController::class,'postAddSender']);

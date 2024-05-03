@@ -40,7 +40,7 @@ class MainController extends Controller {
 		$plugins = $this->helpers->getPlugins();
 		$c = $this->compactValues;
 		
-		$typedTexts = ['Primary','Secondary'];
+		$typedTexts = ['Student','School'];
 		array_push($c,'typedTexts');
 
 		$categories = [
@@ -76,6 +76,34 @@ class MainController extends Controller {
 			]
 		];
 		array_push($c,'categories');
+
+		$locations = [
+			[
+				'name' => "Abaji",
+				'value' => "abaji"
+			],
+			[
+				'name' => "AOP District",
+				'value' => "aop-district"
+			],
+			[
+				'name' => "Asokoro",
+				'value' => "asokoro"
+			],
+			[
+				'name' => "Central Business",
+				'value' => "central-business"
+			],
+			[
+				'name' => "Dakibiyu",
+				'value' => "dakibiyu"
+			],
+			[
+				'name' => "Duboyi",
+				'value' => "duboyi"
+			]
+		];
+        array_push($c,'locations');
         
 
         return view('index',compact($c));

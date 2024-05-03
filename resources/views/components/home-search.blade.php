@@ -5,8 +5,8 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h2>Gain Admission to the Perfect <span class="typed-words"></span> School</h2>
-                            <h4>Find some of the best schools from around the country from our partners and friends.</h4>
+                            <h2>Find the Perfect <span class="typed-words"></span></h2>
+                            <h4>Find some of the best schools in Nigeria from our partners.</h4>
                             <div class="main_input_search_part">
                                 <div class="main_input_search_part_item">
                                     <input type="text" placeholder="What are you looking for?" value="" />
@@ -14,16 +14,15 @@
                                 <div class="main_input_search_part_item intro-search-field">
                                     <select class="selectpicker default" data-live-search="true"
                                         data-selected-text-format="count" data-size="5" title="Select Location">
-                                        <option>Afghanistan</option>
-                                        <option>Albania</option>
-                                        <option>Algeria</option>
-                                        <option>Brazil</option>
-                                        <option>Burundi</option>
-                                        <option>Bulgaria</option>
-                                        <option>Germany</option>
-                                        <option>Grenada</option>
-                                        <option>Guatemala</option>
-                                        <option>Iceland</option>
+                                        <option value="none">Select a location</option>
+                                        <?php
+                                          foreach($locations as $l)
+                                          {
+                                        ?>
+                                         <option value="{{$l['value']}}">{{$l['name']}}</option>  
+                                        <?php
+                                          }
+                                        ?>
                                     </select>
                                 </div>
                                 <div class="main_input_search_part_item intro-search-field">
@@ -40,7 +39,7 @@
                                 <button class="button" onclick="window.location.">Search</button>
                             </div>
                             <div class="main_popular_categories">
-                                <h3>Or Browse Popular Categories</h3>
+                                <h3>Or Browse Schools With These Facilities</h3>
                                 <ul class="main_popular_categories_list">
                                     <li> <a href="#">
                                             <div class="utf_box"> <i class="im im-icon-Chef-Hat" aria-hidden="true"></i>

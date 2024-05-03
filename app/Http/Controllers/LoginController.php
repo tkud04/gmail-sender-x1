@@ -57,7 +57,7 @@ class LoginController extends Controller {
 	 *
 	 * @return Response
 	 */
-    public function postLogin(Request $request)
+    public function postSignin(Request $request)
     {
         $req = $request->all();
         #dd($req);
