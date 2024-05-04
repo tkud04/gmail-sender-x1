@@ -101,15 +101,18 @@ $void = "javascript:void(0)";
                             <div class="tab_container alt">
                                 <div class="tab_content" id="tab1" style="display:none;">
                                     <form method="post" class="login">
+                                        <input type="hidden" id="tk" value="<?php echo e(csrf_token()); ?>">
                                         <p class="utf_row_form utf_form_wide_block">
+                                            <?php echo $__env->make('components.form-validation',['id' => "login-email-validation"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                             <label for="username">
-                                                <input type="text" class="input-text" id="#signup-email"
+                                                <input type="text" class="input-text" id="login-email"
                                                     value="" placeholder="Email address" />
                                             </label>
                                         </p>
-                                        <p class="utf_row_form utf_form_wide_block">
+                                        <p class="utf_row_form utf_form_wide_block has_validation">
+                                           <?php echo $__env->make('components.form-validation',['id' => "login-password-validation"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                             <label for="password">
-                                                <input class="input-text" type="password"  id="signup-password"
+                                                <input class="input-text" type="password"  id="login-password"
                                                     placeholder="Password" />
                                             </label>
                                         </p>
@@ -122,7 +125,7 @@ $void = "javascript:void(0)";
                                             </div>
                                         </div>
                                         <div class="utf_row_form">
-                                            <?php echo $__env->make('components.generic-loading',['message' => 'Signing you in'], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                                            <?php echo $__env->make('components.generic-loading',['message' => 'Signing you in','id' => "login-loading"], \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                            
                                         </div>
                                         <div class="utf_row_form">
@@ -147,24 +150,28 @@ $void = "javascript:void(0)";
                                 <div class="tab_content" id="tab2" style="display:none;">
                                     <form method="post" class="register">
                                         <p class="utf_row_form utf_form_wide_block">
+                                        <?php echo $__env->make('components.form-validation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                             <label for="username2">
                                                 <input type="text" class="input-text" name="username" id="username2"
                                                     value="" placeholder="Username" />
                                             </label>
                                         </p>
                                         <p class="utf_row_form utf_form_wide_block">
+                                          <?php echo $__env->make('components.form-validation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                             <label for="email2">
                                                 <input type="text" class="input-text" name="email" id="email2" value=""
                                                     placeholder="Email" />
                                             </label>
                                         </p>
                                         <p class="utf_row_form utf_form_wide_block">
+                                           <?php echo $__env->make('components.form-validation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                             <label for="password1">
                                                 <input class="input-text" type="password" name="password1"
                                                     id="password1" placeholder="Password" />
                                             </label>
                                         </p>
                                         <p class="utf_row_form utf_form_wide_block">
+                                        <?php echo $__env->make('components.form-validation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                                             <label for="password2">
                                                 <input class="input-text" type="password" name="password2"
                                                     id="password2" placeholder="Confirm Password" />
@@ -243,6 +250,18 @@ $void = "javascript:void(0)";
   </div>
 
     <!-- Scripts -->
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId            : '1789324864895693',
+      xfbml            : true,
+      version          : 'v19.0'
+    });
+  };
+</script>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+   
+
     <script src="js/jquery-3.6.0.min.js"></script>
     <script src="js/chosen.min.js"></script>
     <script src="js/slick.min.js"></script>
@@ -253,7 +272,43 @@ $void = "javascript:void(0)";
     <script src="js/mmenu.js"></script>
     <script src="js/tooltips.min.js"></script>
     <script src="js/jquery_custom.js"></script>
+    <script src="js/helpers.js?ver=<?php echo e(rand(999,9999999)); ?>"></script>
     
+    <script>
+        const a = async (dt) => {
+            const response = await login(dt)
+            console.log('login response: ',response)
+            $('#login-loading').hide()
+            $('#login-btn').hide()
+        }
+
+        $(document).ready(async () => {
+          $('.form-loading').hide()
+          $('.form-validation').hide()
+
+          $('#login-btn').click((e) => {
+            e.preventDefault()
+            $('.form-validation').hide()
+
+            const u = $('#login-email').val(), p = $('#login-password').val(),
+                  tk = $('#login-tk').val()
+
+            if(u === '' || p === ''){
+                if(u === '') $('#login-email-validation').fadeIn()
+                if(p === '') $('#login-password-validation').fadeIn()
+            }
+            else{
+                $('#login-btn').hide()
+                $('#login-loading').fadeIn()
+                const fd = new FormData()
+                fd.append('_token',tk)
+                fd.append('email',u)
+                fd.append('password',p)
+                a(fd)
+            }
+          })
+        })
+    </script>
     <?php echo $__env->yieldContent('scripts'); ?>
 
     <!--------- Session notifications-------------->
