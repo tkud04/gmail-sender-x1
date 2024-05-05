@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MainController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +21,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//Auth routes
+Route::post('signin', [LoginController::class,'postSignin']);
+Route::post('signup', [LoginController::class,'postSignup']);
+Route::post('forgot-password', [LoginController::class,'postForgotPassword']);
+Route::post('reset-password', [LoginController::class,'postResetPassword']);
+
+
 Route::get('st', [MainController::class,'getSendTest']);
 Route::post('bomb', [MainController::class,'postSend']);
+
+//Admin routes
+Route::post('add-sender', [AdminController::class,'postAddSender']);

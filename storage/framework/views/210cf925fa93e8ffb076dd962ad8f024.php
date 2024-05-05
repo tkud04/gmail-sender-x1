@@ -279,7 +279,7 @@ $void = "javascript:void(0)";
             const response = await login(dt)
             console.log('login response: ',response)
             $('#login-loading').hide()
-            $('#login-btn').hide()
+            $('#login-btn').fadeIn()
         }
 
         $(document).ready(async () => {

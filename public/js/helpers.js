@@ -1,5 +1,5 @@
 const login = async (fd) => {
-    const url = 'signin'
+    const url = 'api/signin'
     const response =  await fetch(url, {
         method: "POST",
         body: fd
