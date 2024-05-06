@@ -280,6 +280,25 @@ $void = "javascript:void(0)";
             console.log('login response: ',response)
             $('#login-loading').hide()
             $('#login-btn').fadeIn()
+
+            if(response.status === "ok"){
+                window.location = 'dashboard'
+            }
+            else{
+                let responseMessage = ''
+
+                if(response.message === 'auth'){
+                  alert('Failed to sign in: Username or password incorrect')
+                }
+                else if(response.message === 'validation'){
+                    alert('Failed to sign in: All fields are required')
+                }
+                else{
+                    responseMessage = 
+                    alert(`Failed to sign in: ${response?.message}`)
+                }
+                
+            }
         }
 
         $(document).ready(async () => {
